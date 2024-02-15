@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		B0FFB33B2B7EC1ED00CCC42E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB33A2B7EC1ED00CCC42E /* main.cpp */; };
+		B0FFB3482B7EC73D00CCC42E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FFB3462B7EC51C00CCC42E /* AppKit.framework */; };
+		B0FFB3492B7EC74400CCC42E /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FFB3422B7EC51500CCC42E /* Metal.framework */; };
+		B0FFB34A2B7EC74A00CCC42E /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FFB3432B7EC51500CCC42E /* MetalKit.framework */; };
+		B0FFB34F2B7ED51000CCC42E /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB34D2B7ED51000CCC42E /* renderer.cpp */; };
+		B0FFB3522B7ED52400CCC42E /* app_delegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB3502B7ED52400CCC42E /* app_delegate.cpp */; };
+		B0FFB3552B7ED53100CCC42E /* view_delegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB3532B7ED53100CCC42E /* view_delegate.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +31,16 @@
 /* Begin PBXFileReference section */
 		B0FFB3372B7EC1ED00CCC42E /* hello_metal_cpp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = hello_metal_cpp; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0FFB33A2B7EC1ED00CCC42E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		B0FFB3422B7EC51500CCC42E /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		B0FFB3432B7EC51500CCC42E /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		B0FFB3462B7EC51C00CCC42E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		B0FFB34D2B7ED51000CCC42E /* renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = renderer.cpp; sourceTree = "<group>"; };
+		B0FFB3502B7ED52400CCC42E /* app_delegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = app_delegate.cpp; sourceTree = "<group>"; };
+		B0FFB3532B7ED53100CCC42E /* view_delegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = view_delegate.cpp; sourceTree = "<group>"; };
+		B0FFB3562B7ED55B00CCC42E /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		B0FFB3572B7ED7C900CCC42E /* app_delegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = app_delegate.h; sourceTree = "<group>"; };
+		B0FFB3582B7ED7E200CCC42E /* view_delegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = view_delegate.h; sourceTree = "<group>"; };
+		B0FFB3592B7ED82100CCC42E /* renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = renderer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +48,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0FFB3482B7EC73D00CCC42E /* AppKit.framework in Frameworks */,
+				B0FFB34A2B7EC74A00CCC42E /* MetalKit.framework in Frameworks */,
+				B0FFB3492B7EC74400CCC42E /* Metal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +62,7 @@
 			children = (
 				B0FFB3392B7EC1ED00CCC42E /* hello_metal_cpp */,
 				B0FFB3382B7EC1ED00CCC42E /* Products */,
+				B0FFB3412B7EC51500CCC42E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,9 +77,42 @@
 		B0FFB3392B7EC1ED00CCC42E /* hello_metal_cpp */ = {
 			isa = PBXGroup;
 			children = (
+				B0FFB34B2B7ED4E400CCC42E /* control */,
+				B0FFB34C2B7ED4F400CCC42E /* view */,
 				B0FFB33A2B7EC1ED00CCC42E /* main.cpp */,
+				B0FFB3562B7ED55B00CCC42E /* config.h */,
 			);
 			path = hello_metal_cpp;
+			sourceTree = "<group>";
+		};
+		B0FFB3412B7EC51500CCC42E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B0FFB3462B7EC51C00CCC42E /* AppKit.framework */,
+				B0FFB3422B7EC51500CCC42E /* Metal.framework */,
+				B0FFB3432B7EC51500CCC42E /* MetalKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B0FFB34B2B7ED4E400CCC42E /* control */ = {
+			isa = PBXGroup;
+			children = (
+				B0FFB3502B7ED52400CCC42E /* app_delegate.cpp */,
+				B0FFB3532B7ED53100CCC42E /* view_delegate.cpp */,
+				B0FFB3572B7ED7C900CCC42E /* app_delegate.h */,
+				B0FFB3582B7ED7E200CCC42E /* view_delegate.h */,
+			);
+			path = control;
+			sourceTree = "<group>";
+		};
+		B0FFB34C2B7ED4F400CCC42E /* view */ = {
+			isa = PBXGroup;
+			children = (
+				B0FFB34D2B7ED51000CCC42E /* renderer.cpp */,
+				B0FFB3592B7ED82100CCC42E /* renderer.h */,
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +172,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0FFB3522B7ED52400CCC42E /* app_delegate.cpp in Sources */,
+				B0FFB34F2B7ED51000CCC42E /* renderer.cpp in Sources */,
 				B0FFB33B2B7EC1ED00CCC42E /* main.cpp in Sources */,
+				B0FFB3552B7ED53100CCC42E /* view_delegate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +234,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = "/Users/danielrivera/Projects/hello_metal_cpp/metal-cpp";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -233,6 +290,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = "/Users/danielrivera/Projects/hello_metal_cpp/metal-cpp";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
