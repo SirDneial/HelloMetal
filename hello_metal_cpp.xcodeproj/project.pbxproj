@@ -14,6 +14,7 @@
 		B0FFB34F2B7ED51000CCC42E /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB34D2B7ED51000CCC42E /* renderer.cpp */; };
 		B0FFB3522B7ED52400CCC42E /* app_delegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB3502B7ED52400CCC42E /* app_delegate.cpp */; };
 		B0FFB3552B7ED53100CCC42E /* view_delegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB3532B7ED53100CCC42E /* view_delegate.cpp */; };
+		B0FFB35C2B7EDBEE00CCC42E /* triangle.metal in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB35B2B7EDBEE00CCC42E /* triangle.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,7 @@
 		B0FFB3572B7ED7C900CCC42E /* app_delegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = app_delegate.h; sourceTree = "<group>"; };
 		B0FFB3582B7ED7E200CCC42E /* view_delegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = view_delegate.h; sourceTree = "<group>"; };
 		B0FFB3592B7ED82100CCC42E /* renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = renderer.h; sourceTree = "<group>"; };
+		B0FFB35B2B7EDBEE00CCC42E /* triangle.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = triangle.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		B0FFB3392B7EC1ED00CCC42E /* hello_metal_cpp */ = {
 			isa = PBXGroup;
 			children = (
+				B0FFB35A2B7EDBCA00CCC42E /* shaders */,
 				B0FFB34B2B7ED4E400CCC42E /* control */,
 				B0FFB34C2B7ED4F400CCC42E /* view */,
 				B0FFB33A2B7EC1ED00CCC42E /* main.cpp */,
@@ -113,6 +116,14 @@
 				B0FFB3592B7ED82100CCC42E /* renderer.h */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		B0FFB35A2B7EDBCA00CCC42E /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B0FFB35B2B7EDBEE00CCC42E /* triangle.metal */,
+			);
+			path = shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,6 +185,7 @@
 			files = (
 				B0FFB3522B7ED52400CCC42E /* app_delegate.cpp in Sources */,
 				B0FFB34F2B7ED51000CCC42E /* renderer.cpp in Sources */,
+				B0FFB35C2B7EDBEE00CCC42E /* triangle.metal in Sources */,
 				B0FFB33B2B7EC1ED00CCC42E /* main.cpp in Sources */,
 				B0FFB3552B7ED53100CCC42E /* view_delegate.cpp in Sources */,
 			);

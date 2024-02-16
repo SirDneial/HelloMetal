@@ -6,6 +6,7 @@
 //
 
 #include "app_delegate.h"
+
 AppDelegate::~AppDelegate()
 {
     mtkView->release();
