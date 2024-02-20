@@ -2,7 +2,7 @@
 //  app_delegate.cpp
 //  metal_test
 //
-//  Created by Andrew Mengede on 13/9/2023.
+//  Created by Daniel Rivera on 02/19/2024.
 //
 
 #include "app_delegate.h"

@@ -2,7 +2,7 @@
 //  renderer.h
 //  hello_metal_cpp
 //
-//  Created by Andrew Mengede on 15/9/2023.
+//  Created by Daniel Rivera on 02/19/2024.
 //
 
 #pragma once
@@ -13,11 +13,15 @@ class Renderer
     public:
         Renderer(MTL::Device* device);
         ~Renderer();
-        void buildPipeline();
         void draw(MTK::View* view);
 
     private:
+        void buildMeshes();
+        void buildShaders();
+        MTL::RenderPipelineState* buildShader(const char* filename, const char* vertName, const char* fragName);
         MTL::Device* device;
         MTL::CommandQueue* commandQueue;
-        MTL::RenderPipelineState* trianglePipeline; 
+        
+        MTL::RenderPipelineState* trianglePipeline, *generalPipeline;
+        MTL::Buffer* triangleMesh;
 };

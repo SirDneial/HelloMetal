@@ -15,6 +15,8 @@
 		B0FFB3522B7ED52400CCC42E /* app_delegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB3502B7ED52400CCC42E /* app_delegate.cpp */; };
 		B0FFB3552B7ED53100CCC42E /* view_delegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB3532B7ED53100CCC42E /* view_delegate.cpp */; };
 		B0FFB35C2B7EDBEE00CCC42E /* triangle.metal in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB35B2B7EDBEE00CCC42E /* triangle.metal */; };
+		B0FFB3602B84177100CCC42E /* mesh_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB35E2B84177000CCC42E /* mesh_factory.cpp */; };
+		B0FFB3622B8419EA00CCC42E /* general.metal in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB3612B8419EA00CCC42E /* general.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +45,9 @@
 		B0FFB3582B7ED7E200CCC42E /* view_delegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = view_delegate.h; sourceTree = "<group>"; };
 		B0FFB3592B7ED82100CCC42E /* renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = renderer.h; sourceTree = "<group>"; };
 		B0FFB35B2B7EDBEE00CCC42E /* triangle.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = triangle.metal; sourceTree = "<group>"; };
+		B0FFB35D2B84174F00CCC42E /* mesh_factory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mesh_factory.h; sourceTree = "<group>"; };
+		B0FFB35E2B84177000CCC42E /* mesh_factory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mesh_factory.cpp; sourceTree = "<group>"; };
+		B0FFB3612B8419EA00CCC42E /* general.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = general.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +119,8 @@
 			children = (
 				B0FFB34D2B7ED51000CCC42E /* renderer.cpp */,
 				B0FFB3592B7ED82100CCC42E /* renderer.h */,
+				B0FFB35D2B84174F00CCC42E /* mesh_factory.h */,
+				B0FFB35E2B84177000CCC42E /* mesh_factory.cpp */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -122,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				B0FFB35B2B7EDBEE00CCC42E /* triangle.metal */,
+				B0FFB3612B8419EA00CCC42E /* general.metal */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -184,8 +192,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0FFB3522B7ED52400CCC42E /* app_delegate.cpp in Sources */,
+				B0FFB3622B8419EA00CCC42E /* general.metal in Sources */,
 				B0FFB34F2B7ED51000CCC42E /* renderer.cpp in Sources */,
 				B0FFB35C2B7EDBEE00CCC42E /* triangle.metal in Sources */,
+				B0FFB3602B84177100CCC42E /* mesh_factory.cpp in Sources */,
 				B0FFB33B2B7EC1ED00CCC42E /* main.cpp in Sources */,
 				B0FFB3552B7ED53100CCC42E /* view_delegate.cpp in Sources */,
 			);

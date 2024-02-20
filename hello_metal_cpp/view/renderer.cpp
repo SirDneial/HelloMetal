@@ -6,73 +6,96 @@
 //
 
 #include "renderer.h"
+#include "mesh_factory.h"
 
-using namespace MTL;
-using namespace NS;
-
-Renderer::Renderer(Device* device):
+Renderer::Renderer(MTL::Device* device):
 device(device->retain())
 {
     commandQueue = device->newCommandQueue();
-    buildPipeline();
+    buildMeshes();
+    buildShaders();
 }
 
 Renderer::~Renderer() {
+    triangleMesh->release();
+    trianglePipeline->release();
+    generalPipeline->release();
     commandQueue->release();
     device->release();
 }
 
-void Renderer::buildPipeline() {
+void Renderer::buildMeshes() {
+    triangleMesh = MeshFactory::build_triangle(device);
+}
+
+void Renderer::buildShaders() {
+    trianglePipeline = buildShader(
+        "shaders/triangle.metal", "vertexMain", "fragmentMain");
+    generalPipeline = buildShader(
+        "shaders/general.metal", "vertexMainGeneral", "fragmentMainGeneral");
+}
+
+MTL::RenderPipelineState* Renderer::buildShader(
+    const char* filename, const char* vertName, const char* fragName) {
     
+    //Read the source code from the file.
     std::ifstream file;
-    file.open("shaders/triangle.metal");
+    file.open(filename);
     std::stringstream reader;
     reader << file.rdbuf();
     std::string raw_string = reader.str();
-    String* source_code = String::string(raw_string.c_str(),
-                                                 StringEncoding::UTF8StringEncoding);
-    Error* error = nullptr;
-    CompileOptions* options = nullptr;
-    Library* library = device->newLibrary(source_code, options, &error);
+    NS::String* source_code = NS::String::string(
+        raw_string.c_str(), NS::StringEncoding::UTF8StringEncoding);
+    
+    NS::Error* error = nullptr;
+    MTL::CompileOptions* options = nullptr;
+    MTL::Library* library = device->newLibrary(source_code, options, &error);
     if (!library) {
         std::cout << error->localizedDescription()->utf8String() << std::endl;
     }
     
-    String* vertexName = String::string("vertexMain", StringEncoding::UTF8StringEncoding);
-    Function* vertexMain = library->newFunction(vertexName);
+    NS::String* vertexName = NS::String::string(
+        vertName, NS::StringEncoding::UTF8StringEncoding);
+    MTL::Function* vertexMain = library->newFunction(vertexName);
     
-    String* fragmentName = String::string("fragmentMain", StringEncoding::UTF8StringEncoding);
-    Function* fragmentMain = library->newFunction(fragmentName);
+    NS::String* fragmentName = NS::String::string(
+        fragName, NS::StringEncoding::UTF8StringEncoding);
+    MTL::Function* fragmentMain = library->newFunction(fragmentName);
     
-    RenderPipelineDescriptor* descriptor = RenderPipelineDescriptor::alloc()-> init();
-    descriptor->setVertexFunction(vertexMain);
-    descriptor->setFragmentFunction(fragmentMain);
-    descriptor->colorAttachments()->object(0)->setPixelFormat(::PixelFormat::PixelFormatBGRA8Unorm_sRGB);
+    MTL::RenderPipelineDescriptor* pipelineDescriptor =
+        MTL::RenderPipelineDescriptor::alloc()->init();
+    pipelineDescriptor->setVertexFunction(vertexMain);
+    pipelineDescriptor->setFragmentFunction(fragmentMain);
+    pipelineDescriptor->colorAttachments()
+                    ->object(0)
+                    ->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB);
     
-    trianglePipeline = device->newRenderPipelineState(descriptor, &error);
-    if (!trianglePipeline) {
+    MTL::RenderPipelineState* pipeline = device->newRenderPipelineState(pipelineDescriptor, &error);
+    if (!pipeline) {
         std::cout << error->localizedDescription()->utf8String() << std::endl;
     }
     
-    descriptor->release();
     vertexMain->release();
     fragmentMain->release();
+    pipelineDescriptor->release();
     library->release();
+    file.close();
+    
+    return pipeline;
 }
 
 void Renderer::draw(MTK::View* view) {
     
-    AutoreleasePool* pool = AutoreleasePool::alloc()->init();
+    NS::AutoreleasePool* pool = NS::AutoreleasePool::alloc()->init();
     
-    CommandBuffer* commandBuffer = commandQueue->commandBuffer();
-    RenderPassDescriptor* renderPass = view->currentRenderPassDescriptor();
-    RenderCommandEncoder* encoder = commandBuffer->renderCommandEncoder(renderPass);
+    MTL::CommandBuffer* commandBuffer = commandQueue->commandBuffer();
+    MTL::RenderPassDescriptor* renderPass = view->currentRenderPassDescriptor();
+    MTL::RenderCommandEncoder* encoder = commandBuffer->renderCommandEncoder(renderPass);
     
-    encoder->setRenderPipelineState(trianglePipeline);
-    encoder->drawPrimitives(
-                            PrimitiveType::PrimitiveTypeTriangle,
-                            UInteger(0),  //start
-                            UInteger(3)); //points
+    encoder->setRenderPipelineState(generalPipeline);
+    //buffer, offset, index
+    encoder->setVertexBuffer(triangleMesh, 0, 0);
+    encoder->drawPrimitives(MTL::PrimitiveType::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(3));
     
     encoder->endEncoding();
     commandBuffer->presentDrawable(view->currentDrawable());

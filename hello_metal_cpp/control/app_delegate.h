@@ -2,7 +2,7 @@
 //  app_delegate.h
 //  metal_test
 //
-//  Created by Andrew Mengede on 13/9/2023.
+//  Created by Daniel Rivera on 02/19/2024.
 //
 #pragma once
 #include "../config.h"
