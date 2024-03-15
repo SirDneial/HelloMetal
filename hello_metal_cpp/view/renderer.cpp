@@ -2,7 +2,7 @@
 //  renderer.cpp
 //  hello_metal_cpp
 //
-//  Created by Andrew Mengede on 15/9/2023.
+//  Created by Daniel Rivera on 02/19/2024.
 //
 
 #include "renderer.h"
@@ -35,10 +35,7 @@ void Renderer::buildShaders() {
         "shaders/general.metal", "vertexMainGeneral", "fragmentMainGeneral");
 }
 
-MTL::RenderPipelineState* Renderer::buildShader(
-    const char* filename, const char* vertName, const char* fragName) {
-    
-    //Read the source code from the file.
+MTL::RenderPipelineState* Renderer::buildShader(const char* filename, const char* vertName, const char* fragName) {
     std::ifstream file;
     file.open(filename);
     std::stringstream reader;
@@ -93,7 +90,6 @@ void Renderer::draw(MTK::View* view) {
     MTL::RenderCommandEncoder* encoder = commandBuffer->renderCommandEncoder(renderPass);
     
     encoder->setRenderPipelineState(generalPipeline);
-    //buffer, offset, index
     encoder->setVertexBuffer(triangleMesh, 0, 0);
     encoder->drawPrimitives(MTL::PrimitiveType::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(3));
     

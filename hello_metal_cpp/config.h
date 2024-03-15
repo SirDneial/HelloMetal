@@ -2,7 +2,7 @@
 //  config.h
 //  hello_metal_cpp
 //
-//  Created by Andrew Mengede on 15/9/2023.
+//  Created by Daniel Rivera on 2/19/24.
 //
 
 #pragma once
