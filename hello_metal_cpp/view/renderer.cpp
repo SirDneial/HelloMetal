@@ -17,6 +17,8 @@ device(device->retain())
 }
 
 Renderer::~Renderer() {
+    quadMesh.indexBuffer->release();
+    quadMesh.vertexBuffer->release();
     triangleMesh->release();
     trianglePipeline->release();
     generalPipeline->release();
@@ -26,6 +28,7 @@ Renderer::~Renderer() {
 
 void Renderer::buildMeshes() {
     triangleMesh = MeshFactory::build_triangle(device);
+    quadMesh = MeshFactory::buildQuad(device);
 }
 
 void Renderer::buildShaders() {
@@ -67,6 +70,26 @@ MTL::RenderPipelineState* Renderer::buildShader(const char* filename, const char
                     ->object(0)
                     ->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB);
     
+    MTL::VertexDescriptor* vertexDesc = MTL::VertexDescriptor::alloc()->init();
+    auto attributes = vertexDesc->attributes();
+    
+    // attribute 0 is pos
+    auto positionDesc = attributes->object(0);
+    positionDesc->setFormat(MTL::VertexFormat::VertexFormatFloat2);
+    positionDesc->setOffset(0);
+    positionDesc->setBufferIndex(0);
+    
+    // attribute 1 is color
+    auto colorDesc = attributes->object(1);
+    colorDesc->setFormat(MTL::VertexFormat::VertexFormatFloat3);
+    colorDesc->setOffset(4 * sizeof(float));
+    colorDesc->setBufferIndex(0);
+    
+    auto layoutDesc = vertexDesc->layouts()->object(0);
+    layoutDesc->setStride(8 * sizeof(float));
+    
+    pipelineDescriptor->setVertexDescriptor(vertexDesc);
+    
     MTL::RenderPipelineState* pipeline = device->newRenderPipelineState(pipelineDescriptor, &error);
     if (!pipeline) {
         std::cout << error->localizedDescription()->utf8String() << std::endl;
@@ -90,6 +113,10 @@ void Renderer::draw(MTK::View* view) {
     MTL::RenderCommandEncoder* encoder = commandBuffer->renderCommandEncoder(renderPass);
     
     encoder->setRenderPipelineState(generalPipeline);
+
+    encoder->setVertexBuffer(quadMesh.vertexBuffer, 0, 0);
+    encoder->drawIndexedPrimitives(MTL::PrimitiveType::PrimitiveTypeTriangle, NS::UInteger(6), MTL::IndexType::IndexTypeUInt16, quadMesh.indexBuffer, NS::UInteger(0), NS::UInteger(6));
+    
     encoder->setVertexBuffer(triangleMesh, 0, 0);
     encoder->drawPrimitives(MTL::PrimitiveType::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(3));
     

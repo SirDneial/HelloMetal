@@ -8,6 +8,11 @@
 #pragma once
 #include "../config.h"
 
+struct Mesh {
+    MTL::Buffer* vertexBuffer, *indexBuffer;
+};
+
 namespace MeshFactory {
     MTL::Buffer* build_triangle(MTL::Device* device);
+    Mesh buildQuad(MTL::Device* device);
 }

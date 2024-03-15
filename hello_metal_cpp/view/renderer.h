@@ -7,6 +7,7 @@
 
 #pragma once
 #include "../config.h"
+#include "mesh_factory.h"
 
 class Renderer
 {
@@ -24,4 +25,5 @@ class Renderer
         
         MTL::RenderPipelineState* trianglePipeline, *generalPipeline;
         MTL::Buffer* triangleMesh;
+        Mesh quadMesh;
 };
