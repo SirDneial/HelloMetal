@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0290C562BAA2B4C006D693C /* mtlm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0290C552BAA2B4C006D693C /* mtlm.cpp */; };
 		B0FFB33B2B7EC1ED00CCC42E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB33A2B7EC1ED00CCC42E /* main.cpp */; };
 		B0FFB3482B7EC73D00CCC42E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FFB3462B7EC51C00CCC42E /* AppKit.framework */; };
 		B0FFB3492B7EC74400CCC42E /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FFB3422B7EC51500CCC42E /* Metal.framework */; };
@@ -32,6 +33,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B0290C542BAA2B3B006D693C /* mtlm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mtlm.h; sourceTree = "<group>"; };
+		B0290C552BAA2B4C006D693C /* mtlm.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mtlm.cpp; sourceTree = "<group>"; };
 		B0FFB3372B7EC1ED00CCC42E /* hello_metal_cpp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = hello_metal_cpp; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0FFB33A2B7EC1ED00CCC42E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B0FFB3422B7EC51500CCC42E /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
@@ -89,6 +92,8 @@
 				B0FFB34C2B7ED4F400CCC42E /* view */,
 				B0FFB33A2B7EC1ED00CCC42E /* main.cpp */,
 				B0FFB3562B7ED55B00CCC42E /* config.h */,
+				B0290C542BAA2B3B006D693C /* mtlm.h */,
+				B0290C552BAA2B4C006D693C /* mtlm.cpp */,
 			);
 			path = hello_metal_cpp;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 				B0FFB3522B7ED52400CCC42E /* app_delegate.cpp in Sources */,
 				B0FFB3622B8419EA00CCC42E /* general.metal in Sources */,
 				B0FFB34F2B7ED51000CCC42E /* renderer.cpp in Sources */,
+				B0290C562BAA2B4C006D693C /* mtlm.cpp in Sources */,
 				B0FFB35C2B7EDBEE00CCC42E /* triangle.metal in Sources */,
 				B0FFB3602B84177100CCC42E /* mesh_factory.cpp in Sources */,
 				B0FFB33B2B7EC1ED00CCC42E /* main.cpp in Sources */,

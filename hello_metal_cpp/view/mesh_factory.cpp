@@ -9,9 +9,9 @@
 MTL::Buffer* MeshFactory::build_triangle(MTL::Device* device) {
 
     Vertex vertices[3] = {
-        {{-0.75, -0.75}, {1.0, 0.0, 0.0}},
-        {{ 0.75, -0.75}, {0.0, 1.0, 0.0}},
-        {{  0.0,  0.75}, {0.0, 0.0, 1.0}}
+        {{-0.75, -0.75}, {1.0, 1.0, 0.0}},
+        {{ 0.75, -0.75}, {1.0, 1.0, 0.0}},
+        {{  0.0,  0.75}, {1.0, 1.0, 0.0}}
     };
 
     MTL::Buffer* buffer = device->newBuffer(3 * sizeof(Vertex), MTL::ResourceStorageModeShared);
@@ -27,7 +27,7 @@ Mesh MeshFactory::buildQuad(MTL::Device* device) {
     Vertex vertices[4] = {
         {{-0.75, -0.75}, {1.0, 0.0, 0.0}},
         {{ 0.75, -0.75}, {0.0, 1.0, 0.0}},
-        {{  0.75,  0.75}, {0.0, 0.0, 1.0}},
+        {{  0.75,  0.75}, {1.0, 0.0, 0.0}},
         {{  -0.75,  0.75}, {0.0, 1.0, 0.0}}
     };
     

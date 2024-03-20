@@ -26,4 +26,6 @@ class Renderer
         MTL::RenderPipelineState* trianglePipeline, *generalPipeline;
         MTL::Buffer* triangleMesh;
         Mesh quadMesh;
+    
+    float t = 0.0f;
 };

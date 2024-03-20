@@ -6,7 +6,7 @@
 //
 
 #include "renderer.h"
-#include "mesh_factory.h"
+#include "../mtlm.h"
 
 Renderer::Renderer(MTL::Device* device):
 device(device->retain())
@@ -17,8 +17,8 @@ device(device->retain())
 }
 
 Renderer::~Renderer() {
-    quadMesh.indexBuffer->release();
     quadMesh.vertexBuffer->release();
+    quadMesh.indexBuffer->release();
     triangleMesh->release();
     trianglePipeline->release();
     generalPipeline->release();
@@ -38,7 +38,10 @@ void Renderer::buildShaders() {
         "shaders/general.metal", "vertexMainGeneral", "fragmentMainGeneral");
 }
 
-MTL::RenderPipelineState* Renderer::buildShader(const char* filename, const char* vertName, const char* fragName) {
+MTL::RenderPipelineState* Renderer::buildShader(
+    const char* filename, const char* vertName, const char* fragName) {
+    
+    //Read the source code from the file.
     std::ifstream file;
     file.open(filename);
     std::stringstream reader;
@@ -47,6 +50,7 @@ MTL::RenderPipelineState* Renderer::buildShader(const char* filename, const char
     NS::String* source_code = NS::String::string(
         raw_string.c_str(), NS::StringEncoding::UTF8StringEncoding);
     
+    //A Metal Library constructs functions from source code
     NS::Error* error = nullptr;
     MTL::CompileOptions* options = nullptr;
     MTL::Library* library = device->newLibrary(source_code, options, &error);
@@ -70,25 +74,23 @@ MTL::RenderPipelineState* Renderer::buildShader(const char* filename, const char
                     ->object(0)
                     ->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB);
     
-    MTL::VertexDescriptor* vertexDesc = MTL::VertexDescriptor::alloc()->init();
-    auto attributes = vertexDesc->attributes();
+    MTL::VertexDescriptor* vertexDescriptor = MTL::VertexDescriptor::alloc()->init();
+    auto attributes = vertexDescriptor->attributes();
+    //position: vec2
+    auto positionDescriptor = attributes->object(0);
+    positionDescriptor->setFormat(MTL::VertexFormat::VertexFormatFloat2);
+    positionDescriptor->setBufferIndex(0);
+    positionDescriptor->setOffset(0);
+    //color: vec3
+    auto colorDescriptor = attributes->object(1);
+    colorDescriptor->setFormat(MTL::VertexFormat::VertexFormatFloat3);
+    colorDescriptor->setBufferIndex(0);
+    colorDescriptor->setOffset(4 * sizeof(float));
+
+    auto layoutDescriptor = vertexDescriptor->layouts()->object(0);
+    layoutDescriptor->setStride(8 * sizeof(float));
     
-    // attribute 0 is pos
-    auto positionDesc = attributes->object(0);
-    positionDesc->setFormat(MTL::VertexFormat::VertexFormatFloat2);
-    positionDesc->setOffset(0);
-    positionDesc->setBufferIndex(0);
-    
-    // attribute 1 is color
-    auto colorDesc = attributes->object(1);
-    colorDesc->setFormat(MTL::VertexFormat::VertexFormatFloat3);
-    colorDesc->setOffset(4 * sizeof(float));
-    colorDesc->setBufferIndex(0);
-    
-    auto layoutDesc = vertexDesc->layouts()->object(0);
-    layoutDesc->setStride(8 * sizeof(float));
-    
-    pipelineDescriptor->setVertexDescriptor(vertexDesc);
+    pipelineDescriptor->setVertexDescriptor(vertexDescriptor);
     
     MTL::RenderPipelineState* pipeline = device->newRenderPipelineState(pipelineDescriptor, &error);
     if (!pipeline) {
@@ -106,20 +108,31 @@ MTL::RenderPipelineState* Renderer::buildShader(const char* filename, const char
 
 void Renderer::draw(MTK::View* view) {
     
+    t += 1.0f;
+    if (t > 360) {
+        t -= 360.0f;
+    }
+    
     NS::AutoreleasePool* pool = NS::AutoreleasePool::alloc()->init();
     
     MTL::CommandBuffer* commandBuffer = commandQueue->commandBuffer();
     MTL::RenderPassDescriptor* renderPass = view->currentRenderPassDescriptor();
     MTL::RenderCommandEncoder* encoder = commandBuffer->renderCommandEncoder(renderPass);
     
+    
     encoder->setRenderPipelineState(generalPipeline);
-
+    simd::float4x4 transform = mtlm::identity();
+    transform = mtlm::translation({0.5f, 0.5f, 0.0f}) * mtlm::z_rotation(t) * mtlm::scale(0.1f);
+    encoder->setVertexBytes(&transform, sizeof(simd::float4x4), 1);
     encoder->setVertexBuffer(quadMesh.vertexBuffer, 0, 0);
     encoder->drawIndexedPrimitives(MTL::PrimitiveType::PrimitiveTypeTriangle, NS::UInteger(6), MTL::IndexType::IndexTypeUInt16, quadMesh.indexBuffer, NS::UInteger(0), NS::UInteger(6));
     
-    encoder->setVertexBuffer(triangleMesh, 0, 0);
-    encoder->drawPrimitives(MTL::PrimitiveType::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(3));
-    
+//    this is the triangle 
+//    transform = mtlm::translation({0.5f, 0.5f, 0.0f}) * mtlm::z_rotation(t) * mtlm::scale(0.1f);
+//    encoder->setVertexBytes(&transform, sizeof(simd::float4x4), 1);
+//    encoder->setVertexBuffer(triangleMesh, 0, 0);
+//    encoder->drawPrimitives(MTL::PrimitiveType::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(3));
+     
     encoder->endEncoding();
     commandBuffer->presentDrawable(view->currentDrawable());
     commandBuffer->commit();
